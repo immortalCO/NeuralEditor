@@ -1,1 +1,207 @@
-Coming Soon
+<!DOCTYPE html>
+<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>NeuralEditor: Editing Neural Radiance Fields via Manipulating Point Clouds</title>
+
+    <meta name="description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:image" content="https://immortalco.github.io/NeuralEditor/img/teaser_simple.jpg">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1335">
+    <meta property="og:image:height" content="1192">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://immortalco.github.io/NeuralEditor/">
+    <meta property="og:title" content="NeuralEditor Editing Neural Radiance Fields via Manipulating Point Clouds">
+    <meta property="og:description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NeuralEditor Editing Neural Radiance Fields via Manipulating Point Clouds">
+    <meta name="twitter:description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
+    <meta name="twitter:image" content="https://immortalco.github.io/NeuralEditor/img/teaser_simple.jpg">
+
+
+    <!-- mirror: F0%9F%AA%9E&lt -->
+    <link rel="icon" href="neuraleditor.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/codemirror.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
+    <script src="js/video_comparison.js"></script>
+    <script src="js/app.js"></script>
+</head>
+
+<body>
+    <div class="container" id="header" style="text-align: center; margin: auto;">
+        <div class="row" id="title-row" style="max-width: 100%; margin: 0 auto; display: inline-block">
+            <h2 class="col-md-12 text-center" id="title">
+                <b>NeuralEditor</b>: Editing Neural Radiance Fields via Manipulating Point Clouds<br>
+                <small>
+                    CVPR 2023
+                </small>
+            </h2>
+        </div>
+        <div class="row" id="author-row" style="margin:0 auto;">
+            <div class="col-md-12 text-center" style="display: table; margin:0 auto">
+                <table class="author-table" id="author-table">
+                    <tr>
+                        <td>
+                            <a style="text-decoration:none" href="https://immortalco.github.io/">
+                              Jun-Kun Chen
+                            </a><sup>†</sup>
+                        </td>
+                        <td>
+                            <a style="text-decoration:none" href="">
+                              Jipeng Lyu
+                            </a><sup>†</sup>
+                        </td>
+                        <td>
+                            <a style="text-decoration:none" href="https://yxw.cs.illinois.edu/">
+                             Yu-Xiong Wang
+                            </a><sup>1</sup>
+                        </td>
+                    </tr>
+                    
+                </table>
+				<sup>1</sup>University of Illinois at Urbana-Champaign &emsp;
+				<sup>2</sup>Peking University  &emsp;
+				<sup>†</sup>Equal Contribution
+				<br/>
+				{<a style="text-decoration:none" href="mailto:junkun3@illinois.edu">junkun3</a>, <a style="text-decoration:none" href="mailto:yxw@illinois.edu">yxw</a>}@illinois.edu &emsp; <a style="text-decoration:none" href="mailto:lvjipeng@pku.edu.cn">lvjipeng@pku.edu.cn</a>
+				
+				
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('author-row').style.maxWidth = document.getElementById("title-row").clientWidth + 'px';
+    </script>
+    <div class="container" id="main">
+        <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 text-center">
+                    <ul class="nav nav-pills nav-justified">
+                        <li>
+                            <a href="javascript:alert('to be uploaded')">
+                            <img src="./img/paper_image.jpg" height="60px">
+                                <h4><strong>Paper</strong></h4>
+                            </a>
+                        </li>
+						<li>
+                            <a href="javascript:alert('to be uploaded')">
+                            <img src="./img/paper_image.jpg" height="60px">
+                                <h4><strong>Poster</strong></h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:alert('to be uploaded')">
+                            <img src="./img/youtube_icon.png" height="60px">
+                                <h4><strong>Video</strong></h4>
+                            </a>
+					  </li>
+                        <li>
+                            <a href="javascript:alert('to be uploaded')">
+                            <image src="img/real_database_icon.png" height="60px">
+                                <h4><strong>Benchmark</strong></h4>
+                            </a>
+                        </li>                            
+                        <li>
+                            <a href="https://github.com/immortalCO/NeuralEditor" target="_blank">
+                            <image src="img/github.png" height="60px">
+                                <h4><strong>Code</strong></h4>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+        </div>
+
+
+		<!--
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="video-compare-container" id="materialsDiv">
+                    <video class="video" id="materials" loop playsinline autoPlay muted src="video/materials_circle_mipnerf_ours.mp4" onplay="resizeAndPlay(this)"></video>
+                    
+                    <canvas height=0 class="videoMerge" id="materialsMerge"></canvas>
+                </div>
+            </div>
+        </div>
+		-->
+		
+		<div class="row">
+		  <image src="img/teaser.jpg" class="img-responsive" alt="overview" width="75%" style="max-height: 300px;margin:auto;">
+		</div>
+
+        <div class="row">
+			<h3>
+          Abstract &amp; Architecture </h3>
+            <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
+                
+                <p class="text-justify">
+This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.
+              </p>
+				
+				<image src="img/render.jpg" class="img-responsive" alt="overview" width="60%" style="max-height: 300px;margin:auto;">
+            </div>
+        </div>
+
+        
+	
+
+        <!--
+      <div class="row">
+			<h3>
+                    Video
+            </h3>
+            <div class="col-md-8 col-md-offset-2">
+                
+              <div class="text-center">
+                    <div style="position:relative;padding-top:56.25%;">
+                        <iframe src="https://youtube.com/embed/qrdRH9irAlk" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+--->
+
+            
+        <div class="row">
+			<h3>
+                    Citation
+          </h3>
+            <div class="col-md-8 col-md-offset-2">
+                
+              <div class="form-group col-md-10 col-md-offset-1">
+                    <textarea id="bibtex" class="form-control" readonly>
+@inproceedings{neuraleditor,
+    title={{NeuralEditor}: Editing Neural Radiance Fields via Manipulating Point Clouds},
+    author={Chen, Jun-Kun and Lyu, Jipeng and Wang, Yu-Xiong},
+    booktitle={CVPR},
+    year={2023}
+}
+</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+			 <h3>
+                    Acknowledgements
+          </h3>
+            <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
+               
+                <p class="text-justify">
+                This work was supported in part by NSF Grant 2106825, NIFA Award 2020-67021-32799, the Jump ARCHES endowment, the NCSA Fellows program, the IBM-Illinois Discovery Accelerator Institute, the Illinois-Insper Partnership, and the Amazon Research Award. This work used NVIDIA GPUs at NCSA Delta through allocation CIS220014 from the ACCESS program. We thank the authors of <a href="https://www.matthewtancik.com/nerf" target="_blank">NeRF</a> for their help in processing Blender files of the NS dataset.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+</body></html>
