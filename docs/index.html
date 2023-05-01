@@ -42,9 +42,9 @@
     <div class="container" id="header" style="text-align: center; margin: auto;">
         <div class="row" id="title-row" style="max-width: 100%; margin: 0 auto; display: inline-block">
             <h2 class="col-md-12 text-center" id="title">
-                <img src="./img/neuraleditor_icon.jpg" height="32px">
+                <img src="./img/neuraleditor_icon.jpg" height="32px" />
 				<b>NeuralEditor</b>: Editing Neural Radiance Fields via Manipulating Point Clouds
-				<img src="./img/pointcloud_icon.jpg" height="32px">
+				<img src="./img/pointcloud_icon.jpg" height="32px" />
 				<br> 
                 <small>
                     CVPR 2023
@@ -138,21 +138,54 @@
 		-->
 		
 		<div class="row">
-		  <image src="img/teaser.jpg" class="img-responsive" alt="overview" width="75%" style="max-height: 300px;margin:auto;">
+			<table width="100%">
+		 	<tbody><tr>
+                        <td align="left" valign="top" width="25%">
+                            <video id="result1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/lego_ours1.mp4" type="video/mp4">
+                            </video>
+                        </td>
+                        <td align="left" valign="top" width="25%">
+                            <video id="result2" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/lego_ours1.mp4" type="video/mp4">
+                            </video>
+                        </td>
+				<td align="left" valign="top" width="25%">
+                            <video id="result3" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/materials_ours1.mp4" type="video/mp4">
+                            </video>
+                        </td>
+				<td align="left" valign="top" width="25%">
+                            <video id="result4" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/ship_ours1.mp4" type="video/mp4">
+                            </video>
+                        </td>
+                    </tr>
+                </tbody>
+				</table>
 		</div>
+		
 
         <div class="row">
 			<h3>
-          Abstract &amp; Architecture </h3>
+          Abstract </h3>
+			<image src="img/teaser.jpg" class="img-responsive" alt="overview" width="75%" style="max-height: 300px;margin:auto;" />
             <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
                 
                 <p class="text-justify">
 This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.
               </p>
 				
-				<image src="img/render.jpg" class="img-responsive" alt="overview" width="60%" style="max-height: 300px;margin:auto;">
+				
             </div>
         </div>
+		<div class="row">
+			<h3>
+          Architecture 
+			</h3>
+			
+			<image src="img/render.jpg" class="img-responsive" alt="overview" width="60%" style="max-height: 300px;margin:auto;" />
+		</div>
 
         
 	
