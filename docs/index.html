@@ -1,131 +1,107 @@
 <!DOCTYPE html>
-<html><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-    <title>NeuralEditor: Editing Neural Radiance Fields via Manipulating Point Clouds</title>
-
-    <meta name="description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta property="og:image" content="https://immortalco.github.io/NeuralEditor/img/teaser_simple.jpg">
-    <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="1335">
-    <meta property="og:image:height" content="1192">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://immortalco.github.io/NeuralEditor/">
-    <meta property="og:title" content="NeuralEditor Editing Neural Radiance Fields via Manipulating Point Clouds">
-    <meta property="og:description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NeuralEditor Editing Neural Radiance Fields via Manipulating Point Clouds">
-    <meta name="twitter:description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
-    <meta name="twitter:image" content="https://immortalco.github.io/NeuralEditor/img/teaser_simple.jpg">
-
-
-    <!-- mirror: F0%9F%AA%9E&lt -->
-    <link rel="icon" href="neuraleditor.ico">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/codemirror.min.css">
-    <link rel="stylesheet" href="css/app.css">
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/codemirror.min.js"></script>
-    <script src="js/clipboard.min.js"></script>
-    <script src="js/video_comparison.js"></script>
-    <script src="js/app.js"></script>
+<html>
+<head lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>NeuralEditor: Editing Neural Radiance Fields via Manipulating Point Clouds</title>
+<meta name="description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:image" content="https://immortalco.github.io/NeuralEditor/img/teaser_simple.jpg">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1335">
+<meta property="og:image:height" content="1192">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://immortalco.github.io/NeuralEditor/">
+<meta property="og:title" content="NeuralEditor Editing Neural Radiance Fields via Manipulating Point Clouds">
+<meta property="og:description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NeuralEditor Editing Neural Radiance Fields via Manipulating Point Clouds">
+<meta name="twitter:description" content="This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.">
+<meta name="twitter:image" content="https://immortalco.github.io/NeuralEditor/img/teaser_simple.jpg">
+<!-- mirror: F0%9F%AA%9E&lt -->
+<link rel="icon" href="neuraleditor.ico">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/codemirror.min.css">
+<link rel="stylesheet" href="css/app.css">
+<style>
+.rrotated {
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    /* Internet Explorer 9*/
+    -moz-transform: rotate(90deg);
+    /* Firefox */
+    -webkit-transform: rotate(90deg);
+    /* Safari 和 Chrome */
+    -o-transform: rotate(90deg);/* Opera */
+}
+.lrotated {
+    transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    /* Internet Explorer 9*/
+    -moz-transform: rotate(270deg);
+    /* Firefox */
+    -webkit-transform: rotate(270deg);
+    /* Safari 和 Chrome */
+    -o-transform: rotate(270deg);/* Opera */
+}
+</style>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/codemirror.min.js"></script>
+<script src="js/clipboard.min.js"></script>
+<script src="js/video_comparison.js"></script>
+<script src="js/app.js"></script>
 </head>
 
 <body>
-    <div class="container" id="header" style="text-align: center; margin: auto;">
-        <div class="row" id="title-row" style="max-width: 100%; margin: 0 auto; display: inline-block">
-            <h2 class="col-md-12 text-center" id="title">
-                <img src="./img/neuraleditor_icon.jpg" height="32px" />
-				<b>NeuralEditor</b>: Editing Neural Radiance Fields via Manipulating Point Clouds
-				<img src="./img/pointcloud_icon.jpg" height="32px" />
-				<br> 
-                <small>
-                    CVPR 2023
-                </small>
-            </h2>
-        </div>
-        <div class="row" id="author-row" style="margin:0 auto;">
-            <div class="col-md-12 text-center" style="display: table; margin:0 auto">
-                <table class="author-table" id="author-table">
-                    <tr>
-                        <td>
-                            <a style="text-decoration:none" href="https://immortalco.github.io/">
-                              Jun-Kun Chen
-                            </a><sup>1†</sup>
-                        </td>
-                        <td>
-                            <a style="text-decoration:none" href="">
-                              Jipeng Lyu
-                            </a><sup>2†</sup>
-                        </td>
-                        <td>
-                            <a style="text-decoration:none" href="https://yxw.cs.illinois.edu/">
-                             Yu-Xiong Wang
-                            </a><sup>1</sup>
-                        </td>
-                    </tr>
-                    
-                </table>
-				<sup>1</sup>University of Illinois at Urbana-Champaign &emsp;
-				<sup>2</sup>Peking University  &emsp;
-				<sup>†</sup>Equal Contribution
-				<br/>
-				{<a style="text-decoration:none" href="mailto:junkun3@illinois.edu">junkun3</a>, <a style="text-decoration:none" href="mailto:yxw@illinois.edu">yxw</a>}@illinois.edu &emsp; <a style="text-decoration:none" href="mailto:lvjipeng@pku.edu.cn">lvjipeng@pku.edu.cn</a>
-				
-				
-            </div>
-        </div>
+<div class="container" id="header" style="text-align: center; margin: auto;">
+    <div class="row" id="title-row" style="max-width: 100%; margin: 0 auto; display: inline-block">
+        <h2 class="col-md-12 text-center" id="title"> <img src="./img/neuraleditor_icon.jpg" height="32px" /> <b>NeuralEditor</b>: Editing Neural Radiance Fields via Manipulating Point Clouds <img src="./img/pointcloud_icon.jpg" height="32px" /> <br>
+            <small> CVPR 2023 </small> </h2>
     </div>
-    <script>
+    <div class="row" id="author-row" style="margin:0 auto;">
+        <div class="col-md-12 text-center" style="display: table; margin:0 auto">
+            <table class="author-table" id="author-table">
+                <tr>
+                    <td><a style="text-decoration:none" href="https://immortalco.github.io/"> Jun-Kun Chen </a><sup>1†</sup></td>
+                    <td><a style="text-decoration:none" href=""> Jipeng Lyu </a><sup>2†</sup></td>
+                    <td><a style="text-decoration:none" href="https://yxw.cs.illinois.edu/"> Yu-Xiong Wang </a><sup>1</sup></td>
+                </tr>
+            </table>
+            <sup>1</sup>University of Illinois at Urbana-Champaign &emsp; <sup>2</sup>Peking University  &emsp; <sup>†</sup>Equal Contribution <br/>
+            {<a style="text-decoration:none" href="mailto:junkun3@illinois.edu">junkun3</a>, <a style="text-decoration:none" href="mailto:yxw@illinois.edu">yxw</a>}@illinois.edu &emsp; <a style="text-decoration:none" href="mailto:lvjipeng@pku.edu.cn">lvjipeng@pku.edu.cn</a> </div>
+    </div>
+</div>
+<script>
         document.getElementById('author-row').style.maxWidth = document.getElementById("title-row").clientWidth + 'px';
     </script>
-    <div class="container" id="main">
-        <div class="row">
-                <div class="col-sm-6 col-sm-offset-3 text-center">
-                    <ul class="nav nav-pills nav-justified">
-                        <li>
-                            <a href="javascript:alert('to be uploaded')">
-                            <img src="./img/paper_image.jpg" height="60px">
-                                <h4><strong>Paper</strong></h4>
-                            </a>
-                        </li>
-						<li>
-                            <a href="javascript:alert('to be uploaded')">
-                            <img src="./img/paper_image.jpg" height="60px">
-                                <h4><strong>Poster</strong></h4>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:alert('to be uploaded')">
-                            <img src="./img/youtube_icon.png" height="60px">
-                                <h4><strong>Video</strong></h4>
-                            </a>
-					  </li>
-                        <li>
-                            <a href="javascript:alert('to be uploaded')">
-                            <image src="img/real_database_icon.png" height="60px">
-                                <h4><strong>Benchmark</strong></h4>
-                            </a>
-                        </li>                            
-                        <li>
-                            <a href="https://github.com/immortalCO/NeuralEditor" target="_blank">
-                            <image src="img/github.png" height="60px">
-                                <h4><strong>Code</strong></h4>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<div class="container" id="main">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li> <a href="javascript:alert('to be uploaded')"> <img src="./img/paper_image.jpg" height="60px" />
+                    <h4><strong>Paper</strong></h4>
+                    </a> </li>
+                <li> <a href="javascript:alert('to be uploaded')"> <img src="./img/paper_image.jpg" height="60px" />
+                    <h4><strong>Poster</strong></h4>
+                    </a> </li>
+                <li> <a href="javascript:alert('to be uploaded')"> <img src="./img/youtube_icon.png" height="60px" />
+                    <h4><strong>Video</strong></h4>
+                    </a> </li>
+                <li> <a href="javascript:alert('to be uploaded')">
+                    <image src="img/real_database_icon.png" height="60px" />
+                    <h4><strong>Benchmark</strong></h4>
+                    </a> </li>
+                <li> <a href="https://github.com/immortalCO/NeuralEditor" target="_blank">
+                    <image src="img/github.png" height="60px" />
+                    <h4><strong>Code</strong></h4>
+                    </a> </li>
+            </ul>
         </div>
-
-
-		<!--
+    </div>
+    
+    <!--
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="video-compare-container" id="materialsDiv">
@@ -136,116 +112,213 @@
             </div>
         </div>
 		-->
-		
-		<div class="row">
-			<table width="100%" style="table-layout:fixed">
-		 	<tbody><tr>
-                        <td align="left" valign="top" width="20%">
-                            <video id="result1" width="100%" playsinline="" autoplay="" loop="" muted="">
+    
+    <div class="row" align="center">
+        <table width="75%" style="table-layout:fixed">
+            <tbody>
+                <tr>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/hotdog_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result2" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/lego_noco_ours_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result3" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/materials_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result4" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/chair_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td colspan="2" rowspan="2" align="left" valign="top" width="33.3333%" bgcolor="#000000"><video id="resultmorph" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/morph_ours_2M.mp4" type="video/mp4">
+                        </video></td>
+                </tr>
+                <tr>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result5" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/ship_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result6" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/ficus_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result7" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/mic_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="16.6667%" bgcolor="#000000"><video id="result8" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/drums_ours1_web.mp4" type="video/mp4">
+                        </video></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><center>
+                            Human-Guided Shape Deformation
+                        </center></td>
+                    <td colspan="2"><center>
+                            Scene Morphing
+                        </center></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <h3> Abstract </h3>
+        <!-- <image src="img/teaser.jpg" class="img-responsive" alt="overview" width="75%" style="max-height: 300px;margin:auto;" /> -->
+        <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
+            <p class="text-justify"> This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene. </p>
+        </div>
+    </div>
+    <div class="row">
+        <h3> Architecture &amp; Design</h3>
+        <table width="100%" style="table-layout:fixed">
+            <tbody>
+                <tr>
+                    <td align="left" valign="top" width="25%"><video id="arch1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/arch1.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="25%"><video id="arch2" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/arch2v2.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="25%"><video id="arch3" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/arch3.mp4" type="video/mp4">
+                        </video></td>
+                    <td align="left" valign="top" width="25%"><video id="arch4" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/arch4.mp4" type="video/mp4">
+                        </video></td>
+                </tr>
+                <tr>
+                    <td width="25%"><center>
+                            K-D Tree-Based Adaptive Voxel
+                        </center></td>
+                    <td width="25%"><center>
+                            Render Over K-D Voxels
+                        </center></td>
+                    <td width="25%"><center>
+                            Deterministic Spline Integration
+                        </center></td>
+                    <td width="25%"><center>
+                            Unified Scene Editing Scheme
+                        </center></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <h3> Shape Deformation </h3>
+        <center>
+            <table width="75%" style="table-layout:fixed">
+                <tbody>
+                    <tr>
+                        <td align="center" valign="middle" colspan="5"><b>PointNeRF (Baseline)</b>: Zero-Shot Inference </td>
+                    </tr>
+                    <tr>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="pn_chair0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/chair_pn0_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="pn_hotdog0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/hotdog_pn0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <td align="left" valign="top" width="12.5%" ><video id="pn_lego0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/lego_pn0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <td align="left" valign="top" width="12.5%" ><video id="pn_drums0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/drums_pn0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="pn_ficus0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/ficus_pn0_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="pn_materials0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/materials_pn0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="pn_mic0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/mic_pn0_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="pn_ship0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/ship_pn0_web.mp4" type="video/mp4">
+                            </video></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle" colspan="5"><b>NeuralEditor (Ours)</b>: Zero-Shot Inference </td>
+                    </tr>
+                    <tr>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="chair0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/chair_ours0_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="hotdog0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/hotdog_ours0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <td align="left" valign="top" width="12.5%" ><video id="lego0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/lego_ours0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <td align="left" valign="top" width="12.5%" ><video id="drums0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/drums_ours0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="ficus0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/ficus_ours0_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="materials0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/materials_ours0_web.mp4" type="video/mp4">
+                            </video></td>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="mic0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/mic_ours0_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="ship0" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/ship_ours0_web.mp4" type="video/mp4">
+                            </video></td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="middle" colspan="5"><b>NeuralEditor (Ours)</b>: Fine-Tuning </td>
+                    </tr>
+                    <tr>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="chair1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/chair_ours1_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="hotdog1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/hotdog_ours1_web.mp4" type="video/mp4">
+                            </video></td>
+                        <td align="left" valign="top" width="12.5%" ><video id="lego1" width="100%" playsinline="" autoplay="" loop="" muted="">
                                 <source src="video/lego_ours1_web.mp4" type="video/mp4">
-                            </video>
-                        </td>
-                        <td align="left" valign="top" width="20%">
-                            <video id="result2" width="100%" playsinline="" autoplay="" loop="" muted="">
-                                <source src="video/lego_noco_ours_web.mp4" type="video/mp4">
-                            </video>
-                        </td>
-				<td align="left" valign="top" width="20%">
-                            <video id="result3" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            </video></td>
+                        <td align="left" valign="top" width="12.5%" ><video id="drums1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                                <source src="video/drums_ours1_web.mp4" type="video/mp4">
+                            </video></td>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="ficus1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/ficus_ours1_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="materials1" width="100%" playsinline="" autoplay="" loop="" muted="">
                                 <source src="video/materials_ours1_web.mp4" type="video/mp4">
-                            </video>
-                        </td>
-				<td align="left" valign="top" width="20%">
-                            <video id="result4" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            </video></td>
+                        <!-- <td align="left" valign="top" width="12.5%" ><video id="mic1" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/mic_ours1_web.mp4" type="video/mp4">
+                        </video></td> -->
+                        <td align="left" valign="top" width="12.5%" ><video id="ship1" width="100%" playsinline="" autoplay="" loop="" muted="">
                                 <source src="video/ship_ours1_web.mp4" type="video/mp4">
-                            </video>
-                        </td>
-				<td align="left" valign="top" width="20%">
-                            <video id="result5" width="100%" playsinline="" autoplay="" loop="" muted="">
-                                <source src="video/ficus_ours1_web.mp4" type="video/mp4">
-                            </video>
-                        </td>
+                            </video></td>
                     </tr>
                 </tbody>
-		  </table>
-	  </div>
-		
-
-      <div class="row">
-			<h3>
-          Abstract </h3>
-		<!-- <image src="img/teaser.jpg" class="img-responsive" alt="overview" width="75%" style="max-height: 300px;margin:auto;" /> -->
-            <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
-                
-                <p class="text-justify">
-This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) natively editable for general shape editing tasks. Despite their impressive results on novel-view synthesis, it remains a fundamental challenge for NeRFs to edit the shape of the scene. Our key insight is to exploit the explicit point cloud representation as the underlying structure to construct NeRFs, inspired by the intuitive interpretation of NeRF rendering as a process that projects or “plots” the associated 3D point cloud to a 2D image plane. To this end, NeuralEditor introduces a novel rendering scheme based on deterministic integration within K-D tree-guided density-adaptive voxels, which produces both high-quality rendering results and precise point clouds through optimization. NeuralEditor then performs shape editing via mapping associated points between point clouds. Extensive evaluation shows that NeuralEditor achieves state-of-the-art performance in both shape deformation and scene morphing tasks. Notably, NeuralEditor supports both zero-shot inference and further fine-tuning over the edited scene.
-              </p>
-				
-				
-            </div>
-        </div>
-		<div class="row">
-			<h3>
-          Architecture &amp; Design</h3>
-			
-			<table width="100%" style="table-layout:fixed">
-		 	<tbody><tr>
-                        <td align="left" valign="top" width="25%">
-                            <video id="arch1" width="100%" playsinline="" autoplay="" loop="" muted="">
-                                <source src="video/arch1.mp4" type="video/mp4">
-                            </video>
-                        </td>
-                        <td align="left" valign="top" width="25%">
-                            <video id="arch2" width="100%" playsinline="" autoplay="" loop="" muted="">
-                                <source src="video/arch2v2.mp4" type="video/mp4">
-                            </video>
-                        </td>
-				<td align="left" valign="top" width="25%">
-                            <video id="arch3" width="100%" playsinline="" autoplay="" loop="" muted="">
-                                <source src="video/arch3.mp4" type="video/mp4">
-                            </video>
-              </td>
-				<td align="left" valign="top" width="25%">
-                            <video id="arch4" width="100%" playsinline="" autoplay="" loop="" muted="">
-                              <source src="video/arch4.mp4" type="video/mp4">
-                            </video>
-              </td>
+            </table>
+        </center>
+    </div>
+    <div class="row">
+        <h3> Scene Morphing</h3>
+        <center>
+            <table width="75%" style="table-layout:fixed">
+                <tbody>
+                    <tr>
+                        <td align="center" valign="middle"><video id="morphpn" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/morph_pn_2M.mp4" type="video/mp4">
+                        </video></td>
+                        <td align="center" valign="middle"><video id="morphours" width="100%" playsinline="" autoplay="" loop="" muted="">
+                            <source src="video/morph_ours_2M.mp4" type="video/mp4">
+                        </video></td>
                     </tr>
-				<tr>
-				<td width="25%"><center>K-D Tree-Based Adaptive Voxel</center></td>
-				<td width="25%"><center>Render Over K-D Voxels</center></td>
-				<td width="25%"><center>Deterministic Spline Integration</center></td>
-				<td width="25%"><center>Unified Scene Editing Scheme</center></td>
-				</tr>
-              </tbody>
-		  </table>
-		</div>
-
-		<div class="row">
-			<h3>
-                    Shape Deformation: Ours Zero-Shot v.s. Fine-Tune
-          </h3>
-			TBD
-			
-		</div>
-		<div class="row">
-			<h3>
-                    Shape Deformation: Ours v.s. PointNeRF (Baseline)
-          </h3>
-			TBD
-			
-		</div>
-		<div class="row">
-			<h3>
-                    Scene Morphing: Ours v.s. PointNeRF (Baseline)
-          </h3>
-			TBD
-			
-		</div>
-        
-	
-
-        <!--
+                    <tr>
+                        <td align="center" valign="middle">PointNeRF (Baseline)</td>
+                        <td align="center" valign="middle">NeuralEditor (Ours)</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </center>
+    
+    <!--
       <div class="row">
 			<h3>
                     Video
@@ -260,16 +333,12 @@ This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) nat
             </div>
         </div>
 --->
-
-            
-        <div class="row">
-			<h3>
-                    Citation
-          </h3>
-            <div class="col-md-8 col-md-offset-2">
-                
-              <div class="form-group col-md-10 col-md-offset-1">
-                    <textarea id="bibtex" class="form-control" readonly>
+    
+    <div class="row">
+        <h3> Citation </h3>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="form-group col-md-10 col-md-offset-1">
+                <textarea id="bibtex" class="form-control" readonly>
 @inproceedings{neuraleditor,
     title={{NeuralEditor}: Editing Neural Radiance Fields via Manipulating Point Clouds},
     author={Chen, Jun-Kun and Lyu, Jipeng and Wang, Yu-Xiong},
@@ -277,23 +346,16 @@ This paper proposes NeuralEditor that enables neural radiance fields (NeRFs) nat
     year={2023}
 }
 </textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-			 <h3>
-                    Acknowledgements
-          </h3>
-            <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
-               
-                <p class="text-justify">
-                This work was supported in part by NSF Grant 2106825, NIFA Award 2020-67021-32799, the Jump ARCHES endowment, the NCSA Fellows program, the IBM-Illinois Discovery Accelerator Institute, the Illinois-Insper Partnership, and the Amazon Research Award. This work used NVIDIA GPUs at NCSA Delta through allocation CIS220014 from the ACCESS program. We thank the authors of <a href="https://www.matthewtancik.com/nerf" target="_blank">NeRF</a> for their help in processing Blender files of the NS dataset. <br/>
-				The website template is borrowed from <a href="https://dorverbin.github.io/refnerf/">RefNeRF</a>.
-                </p>
             </div>
         </div>
     </div>
-
-
-</body></html>
+    <div class="row">
+        <h3> Acknowledgements </h3>
+        <div class="col-md-8 col-md-offset-2 col-lg-offset-0 col-lg-12">
+            <p class="text-justify"> This work was supported in part by NSF Grant 2106825, NIFA Award 2020-67021-32799, the Jump ARCHES endowment, the NCSA Fellows program, the IBM-Illinois Discovery Accelerator Institute, the Illinois-Insper Partnership, and the Amazon Research Award. This work used NVIDIA GPUs at NCSA Delta through allocation CIS220014 from the ACCESS program. We thank the authors of <a href="https://www.matthewtancik.com/nerf" target="_blank">NeRF</a> for their help in processing Blender files of the NS dataset. <br/>
+                The website template is borrowed from <a href="https://dorverbin.github.io/refnerf/">RefNeRF</a>. </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
