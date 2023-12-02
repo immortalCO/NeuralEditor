@@ -784,7 +784,6 @@ if train_config is not None and not eval_only:
 """# Create Field"""
 
 from field.kd_field import KDField
-from field.multi_field import MultiField
 
 MAX_LAYER = 22 if CLOUD_NAME == "cloud_gt" else 21
 
